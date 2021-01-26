@@ -1,3 +1,5 @@
+import java.io.File;
+import java.math.BigInteger;
 import java.util.List;
 
 public class Main {
@@ -18,7 +20,14 @@ public class Main {
 		seqs[2] = gen.readGeffeInput("3.txt");
 
 		String Out = gen.GeffeGenerator(seqs[0], seqs[2], seqs[1]);
-		gen.writeGeffeOutput(Out);
-		//System.out.println(list);
+		//gen.writeGeffeOutput(Out);
+		//System.out.println();
+		byte[] bytes = new BigInteger(Out, 2).toByteArray();
+		double[] autoCorrelation = Correlation.autoCorrelation(bytes);
+		StringBuilder autoCorrelationResult = new StringBuilder();
+		for (int i = 0; i < autoCorrelation.length; i++) {
+			autoCorrelationResult.append(i).append(" ").append(autoCorrelation[i]).append("\n");
+		}
+		Correlation.writeTxtBytes(autoCorrelationResult.toString().getBytes(), "mOut.txt");
 	}
 }
